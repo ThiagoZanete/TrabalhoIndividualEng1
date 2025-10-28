@@ -39,10 +39,14 @@ $(TARGET_SHARED): $(OBJ)
 $(TARGET_DLL): $(OBJ)
 	$(CXX) -shared -o $(TARGET_DLL) $(OBJ)
 
+# Garante que o diretório bin exista
+$(BIN_DIR):
+	mkdir -p $(BIN_DIR)
+
 # Limpeza dos binários
 clean:
 	rm -f $(BIN_DIR)/*.o $(BIN_DIR)/*.a $(BIN_DIR)/*.so $(BIN_DIR)/*.dll $(BIN_DIR)/*.exe
 
 # Alvo para compilar testes (opcional, se for usar TDD)
-test: all
-	$(CXX) $(CXXFLAGS) -o $(BIN_DIR)/testeRegressivo.exe test/*.cpp $(OBJ)
+test: $(BIN_DIR)
+	$(CXX) $(CXXFLAGS) -o $(BIN_DIR)/testeRegressivo.exe test/*.cpp $(filter-out $(BIN_DIR)/main.o,$(OBJ))
