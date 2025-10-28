@@ -1,0 +1,7 @@
+# Ignorar binários compilados
+/bin/*
+*.exe
+*.o
+*.a
+*.so
+*.dll
